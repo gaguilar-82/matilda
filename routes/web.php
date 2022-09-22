@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,12 @@ Route::get('/dashboard', function () {
 Route::get('/admin/dashboard', function () {
     return view('/admin/dashboard');
 })->middleware(['auth','web.admins.accounts'])->name('admin.dashboard');
+
+//Users CRUD
+
+Route::get('/admin/users', [UsersController::class, 'index'])
+       ->middleware(['auth','web.admins.accounts'])
+       ->name('admin.users.index');
+
 
 require __DIR__.'/auth.php';

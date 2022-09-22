@@ -16,5 +16,12 @@ module.exports = {
         },
     },
 
+    variants: {
+        extend: {
+            odd: ['active'],
+            even: ['active']
+        }
+    },
+
     plugins: [require('@tailwindcss/forms')],
 };
