@@ -18,8 +18,8 @@ class UsersAccounts
     {
         $user = auth()->user();
 
-        if ($user->role !== 'user' || $user->role !== 'admin') {
-            //return $this->jsonErrorResponse('You are not allowed to access this resource.', [], 403);
+        if ($user->role !== 'user' || $user->is_active !== 1) {
+            abort(403);
         }
         
         return $next($request);
