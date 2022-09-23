@@ -14,23 +14,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth','web.users.accounts'])->name('dashboard');
-
-Route::get('/admin/dashboard', function () {
-    return view('/admin/dashboard');
-})->middleware(['auth','web.admins.accounts'])->name('admin.dashboard');
-
-//Users CRUD
-
-Route::get('/admin/users', [UsersController::class, 'index'])
-       ->middleware(['auth','web.admins.accounts'])
-       ->name('admin.users.index');
-
-
 require __DIR__.'/auth.php';
+
+(new class() {
+    public function __construct()
+    {
+        Route::get('/', function () {
+            return view('welcome');
+        });
+       
+        Route::middleware(['auth'])->group(function () {
+            Route::middleware(['web.users.accounts'])->group(function () {
+                $this->registerUserRoutes();
+            });
+            Route::middleware(['web.admins.accounts'])->group(function () {
+                Route::prefix('admin')->group(function () {
+                    $this->registerAdminRoutes();
+                });
+            });
+
+        });
+    }
+
+    private function registerUserRoutes()
+    {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    }
+
+    private function registerAdminRoutes()
+    {
+        Route::get('/admin/dashboard', function () {
+            return view('/admin/dashboard');
+        })->name('admin.dashboard');
+        
+        //Users CRUD
+        Route::get('/admin/users', [UsersController::class, 'index'])
+               ->name('admin.users.index');
+
+    }
+});
