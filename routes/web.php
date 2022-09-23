@@ -52,6 +52,8 @@ require __DIR__.'/auth.php';
         //Users CRUD
         Route::get('/admin/users', [UsersController::class, 'index'])
                ->name('admin.users.index');
+        Route::get('/admin/users/create', [UsersController::class, 'create'])
+               ->name('admin.users.create');
 
     }
 });
