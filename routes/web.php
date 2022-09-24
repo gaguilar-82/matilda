@@ -45,14 +45,14 @@ require __DIR__.'/auth.php';
 
     private function registerAdminRoutes()
     {
-        Route::get('/admin/dashboard', function () {
+        Route::get('/dashboard', function () {
             return view('/admin/dashboard');
         })->name('admin.dashboard');
         
         //Users CRUD
-        Route::get('/admin/users', [UsersController::class, 'index'])
+        Route::get('/users', [UsersController::class, 'index'])
                ->name('admin.users.index');
-        Route::get('/admin/users/create', [UsersController::class, 'create'])
+        Route::get('/users/create', [UsersController::class, 'create'])
                ->name('admin.users.create');
 
     }
