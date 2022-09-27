@@ -54,6 +54,8 @@ require __DIR__.'/auth.php';
                ->name('admin.users.index');
         Route::get('/users/create', [UsersController::class, 'create'])
                ->name('admin.users.create');
+        Route::post('/users/store', [UsersController::class, 'store'])
+               ->name('admin.users.store');
 
     }
 });
